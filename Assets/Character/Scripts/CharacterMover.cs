@@ -7,7 +7,8 @@ public class CharacterMover : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float rotationSpeed = 30f;
+    public bool isCurrentPlayer = true;
 
     private Transform cameraTransform;
 
@@ -23,7 +24,9 @@ public class CharacterMover : MonoBehaviour
 
     private void Update()
     {
-        Move();
+        if(isCurrentPlayer){
+            Move();
+        }
     }
     
     public void Move(){
@@ -47,6 +50,6 @@ public class CharacterMover : MonoBehaviour
         // Keep the camera fixed in the background (no rotation or movement)
         cameraTransform.position = new Vector3(transform.position.x, transform.position.y, -10f);
         bool isMove = moveDirection.magnitude!=0f;
-        animator.SetBool("isMove",isMove);
+        //animator.SetBool("isMove",isMove);
     }
 }
