@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterMover : MonoBehaviour
 {
@@ -10,9 +11,16 @@ public class CharacterMover : MonoBehaviour
     [SerializeField] private float rotationSpeed = 5f;
 
     private Transform cameraTransform;
+    private Vector2 size = new Vector2(1f,1f);
+
+    // [SerializeField] private Text nicknameText;
+    // public void SetNickname(string value){
+    //     {nicknameText.text = value;}
+    // }
 
     void Start()
     {
+        //SetNickname(PlayerSettings.userName);        
         animator = GetComponent<Animator>();
         // Get reference to the camera transform
         cameraTransform = Camera.main.transform;
@@ -24,8 +32,14 @@ public class CharacterMover : MonoBehaviour
     private void Update()
     {
         Move();
+        Collider2D hit = Physics2D.OverlapBox(transform.position, size, 0, 0);
+        if (hit != null)
+    {
+        Debug.Log(hit.name);
+    }
     }
     
+
     public void Move(){
         // Read keyboard input
         float horizontalInput = Input.GetAxis("Horizontal");
