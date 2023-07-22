@@ -13,14 +13,14 @@ public class CharacterMover : MonoBehaviour
     private Transform cameraTransform;
     private Vector2 size = new Vector2(1f,1f);
 
-    // [SerializeField] private Text nicknameText;
-    // public void SetNickname(string value){
-    //     {nicknameText.text = value;}
-    // }
+    [SerializeField] private Text nicknameText;
+     public void SetNickname(string value){
+         {nicknameText.text = value;}
+    }
 
     void Start()
     {
-        //SetNickname(PlayerSettings.userName);        
+        SetNickname(PlayerSettings.userName);        
         animator = GetComponent<Animator>();
         // Get reference to the camera transform
         cameraTransform = Camera.main.transform;
