@@ -6,11 +6,11 @@ public class RoomSceneUI : MonoBehaviour
 {
     public void OnClickReadyButton()
     {
-        Debug.Log("Ready Button Clicked");
+        LoadingSceneController.LoadScene("MansionMap");
     }
 
     public void OnClickStartButton()
     {
-        Debug.Log("Start Button Clicked");
+        LoadingSceneController.LoadScene("MansionMap");
     }
 }
