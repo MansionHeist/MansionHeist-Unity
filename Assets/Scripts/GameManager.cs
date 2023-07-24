@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     //[SerializeField] private TextMeshProUGUI text; //미션게이지바로 대체
     //[SerializeField] private GameObject gameOverPanel; //게임오버 나타내는 창
     private int mission = 0; //수행한 미션 개수
+    public string password = "";
     [HideInInspector] public bool isGameOver = false;
 
     public IntroUI introUI;
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     
     private void Start(){
         //StartCoroutine(introUI.ShowIntroSequence());
+        password = Random.Range(1000, 10000).ToString();
     }
 
     private void Update(){

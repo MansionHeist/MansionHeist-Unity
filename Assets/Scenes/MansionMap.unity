@@ -936,6 +936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b058f504ceff1b44fa4aedf173d7353d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  password: 
   isGameOver: 0
   introUI: {fileID: 1452327264}
 --- !u!4 &303231029
@@ -1671,7 +1672,7 @@ Transform:
   m_GameObject: {fileID: 651803268}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.09, y: -1.64, z: 0}
+  m_LocalPosition: {x: -0.72, y: 3.97, z: 0}
   m_LocalScale: {x: 0.09, y: 0.09, z: 0.09}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1692,8 +1693,9 @@ MonoBehaviour:
   interactionDistance: 2
   clickableColor: {r: 1, g: 0, b: 0, a: 1}
   itemName: Lock
-  correctPassword: 1234
+  itemController: {fileID: 0}
   lockUI: {fileID: 1039184212}
+  gameManager: {fileID: 303231028}
 --- !u!212 &651803271
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4372,7 +4374,7 @@ Transform:
   m_GameObject: {fileID: 1512243960}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2.53, y: 6.59, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -4392,8 +4394,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionDistance: 2
   clickableColor: {r: 0, g: 1, b: 0, a: 1}
-  itemName: Item
   messageUIController: {fileID: 739709181}
+  gameManager: {fileID: 303231028}
 --- !u!58 &1512243963
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -6,13 +6,12 @@ public class ItemController : MonoBehaviour
 {
     public float interactionDistance = 2f;
     public Color clickableColor = Color.red;
-    public string itemName = "Item"; // Name of the item to display in the message UI
     public MessageUIController messageUIController;
+    public GameManager gameManager;
 
     private SpriteRenderer itemSprite;
 
-    private void Awake()
-    {
+    private void Awake(){
         itemSprite = GetComponent<SpriteRenderer>();
     }
 
@@ -25,11 +24,11 @@ public class ItemController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (InRange()){
-                messageUIController.DisplayMessage("Password for lock is 1234");
+        if (InRange())
+        {
+            messageUIController.DisplayMessage("Closet Lock Password: " + gameManager.password);
         }
     }
-
 
     private void Update()
     {
