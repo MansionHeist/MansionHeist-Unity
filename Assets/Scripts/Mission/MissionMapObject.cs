@@ -11,7 +11,7 @@ public class MissionMapObject : MonoBehaviour
     private Color clickableColor;
 
     [SerializeField]
-    GameObject missionUI;
+    private GameObject missionUI;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +43,8 @@ public class MissionMapObject : MonoBehaviour
     {
         if(isClickable)
         {
+            //missionUI.GetComponent<MissionUI>().Open();
+            missionUI.transform.parent.gameObject.SetActive(true);
             missionUI.SetActive(true);
         }
     }
