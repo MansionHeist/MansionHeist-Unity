@@ -8,17 +8,30 @@ public class MainMenuUI : MonoBehaviour
 {
     [SerializeField]
     private TMP_InputField nameInputField;
+    ServerManager serverManager;
+
+    public void setNickname(string value)
+    {
+        PlayerSettings.userName = value;
+        serverManager = GameObject.Find("ServerManager").GetComponent<ServerManager>();
+        serverManager.emitMessage("setUserNickname", value);
+        //SceneManager.LoadScene("RoomListScene");
+    }
 
     public void OnClickGameStartButton()
     {
-        if(nameInputField.text != "")
+        if(nameInputField.text.Trim()!= "")
         {
-            PlayerSettings.userName = nameInputField.text;
-            SceneManager.LoadScene("RoomListScene");
+            setNickname(nameInputField.text.Trim());
         } else
         {
             nameInputField.GetComponent<Animator>().SetTrigger("on");
         }
+    }
+
+    public void nextScene(){
+        Debug.Log("nextScene");
+        SceneManager.LoadScene("RoomListScene");
     }
 
     public void OnClickQuitButton()
