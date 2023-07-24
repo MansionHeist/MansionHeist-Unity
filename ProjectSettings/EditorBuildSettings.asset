@@ -5,8 +5,8 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 0
     path: Assets/Scenes/RoomListScene.unity
@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/RoomScene.unity
     guid: 2a5c24fff986dec43b91f5d9eb27aa6d
   - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 39b1a2bc433fb3c4f91964a50773af61
+  - enabled: 1
     path: Assets/Scenes/MansionMap.unity
-    guid: 3610689cdd10b437a8a8370ebdceef75
+    guid: f0fc10471624cde4184aec6a84d6c894
   m_configObjects: {}
