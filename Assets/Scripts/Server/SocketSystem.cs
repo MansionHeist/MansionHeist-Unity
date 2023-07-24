@@ -7,11 +7,14 @@ using UnityEngine.UI;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System;
+using Firesplash.GameDevAssets.SocketIO;
 
 public class SocketSystem : MonoBehaviour
 {
+    
     private string userSocketId = "";
-    public SocketIOUnity socket = null;
+    //public SocketIOUnity socket = null;
+    public SocketIOCommunicator sioCom;
     public bool isSocketConnected = false;
     PlayerManager playerManager = null;
     
@@ -20,47 +23,28 @@ public class SocketSystem : MonoBehaviour
     }
 
     void InitSocket(){
-        // Debug.Log("Socket Init");
-        var uri = new Uri("http://158.247.249.12:80");
-        socket = new SocketIOUnity(uri, new SocketIOOptions{
-            Query = new Dictionary<string, string>
-                {
-                    {"token", "UNITY" }
-                }
-            ,
-            EIO = 4
-            ,
-            Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
-        });
-        socket.JsonSerializer = new NewtonsoftJsonSerializer();
-
-        socket.OnConnected += (sender, e) =>
-        {
-            Debug.Log("socket.OnConnected");
+        sioCom = GetComponent<SocketIOCommunicator>();
+        Debug.Log("Socket Init");
+         sioCom.Instance.On("connect", (string data) => {
+            Debug.Log("LOCAL: Hey, we are connected!");
             isSocketConnected = true;
-        };
-        socket.OnDisconnected += (sender, e) =>
-        {
-            Debug.Log("disconnect: " + e);
-        };
-        
-        socket.Connect();
+        });
+        sioCom.Instance.Connect();
         setSocketMessageHandler();
     }
 
     void setSocketMessageHandler(){
-        socket.OnAnyInUnityThread((name, response) => {
-            Debug.Log("OnAnyInUnityThread: " + name + " " + response.GetValue<String>());
-            string json = response.GetValue<String>();
-            if(name == "initSocketId"){
-                initSocketId(json);
-            }
-            else if(name=="playerMovement"){
-                playerManager.updatePlayerMovement(json);
-            }
+        sioCom.Instance.On("initSocketId", (string data) => {
+            Debug.Log("initSocketId: " + data);
+            initSocketId(data);
+        });
+
+        sioCom.Instance.On("playerMove", (string data) => {
+            Debug.Log("playerMove: " + data);
+            playerManager.updatePlayerMovement(data);
         });
     }
-    
+
     void initSocketId(String socketId){
         userSocketId = socketId.Trim();
         Debug.Log("My User Socket Id : " + socketId);
@@ -80,7 +64,7 @@ public class SocketSystem : MonoBehaviour
 
     public void emitMessage(string name, string message){
         if(isSocketConnected){
-            socket.Emit(name, message);
+            sioCom.Instance.Emit(name, message, false);
         }
     }
 }

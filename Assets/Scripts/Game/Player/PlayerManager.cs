@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        socketSystem = GameObject.Find("SocketSystem").GetComponent<SocketSystem>();
+        socketSystem = GameObject.Find("SocketIOCommnicator").GetComponent<SocketSystem>();
         currentPlayer = GameObject.Find("guard1_walk_0");
     }
 
@@ -37,6 +37,9 @@ public class PlayerManager : MonoBehaviour
     }
 
     public void sendUserMovement(){
+        if(socketSystem.getCurrentSocketId()==""){
+            return;
+        }
         PlayerData playerData = new PlayerData();
         Transform transform = currentPlayer.transform;
         Vector3 position = transform.position;
@@ -71,7 +74,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     public void updatePlayerMovement(string json){
+        Debug.Log(json);
         PlayerData playerData = JsonConvert.DeserializeObject<PlayerData>(json);
+        if(playerData.userId == socketSystem.getCurrentSocketId() || playerData.userId == ""){
+            return;
+        }
         Vector3 position = new Vector3(playerData.position[0],playerData.position[1],playerData.position[2]);
         Vector3 scale = new Vector3(playerData.scale[0],playerData.scale[1],playerData.scale[2]);
         Vector3 rotation = new Vector3(playerData.rotation[0],playerData.rotation[1],playerData.rotation[2]);
