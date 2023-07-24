@@ -207,8 +207,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
-=======
 --- !u!1 &394135283
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +306,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rotationSpeed: 5
->>>>>>> main
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
