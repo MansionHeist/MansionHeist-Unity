@@ -10,6 +10,7 @@ public enum EPlayerType{
 
 public class PlayerController : MonoBehaviour
 {
+    public static bool isMoveable = true;
     public EPlayerType playerType = EPlayerType.Thief;
     private Animator animator;
     private Transform cameraTransform;
@@ -35,7 +36,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Move();
+        if (isMoveable)
+            Move();
     }
     
 
