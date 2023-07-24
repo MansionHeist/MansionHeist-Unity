@@ -8,6 +8,8 @@ public class ItemController : MonoBehaviour
     public Color clickableColor = Color.red;
     public MessageUIController messageUIController;
     public GameManager gameManager;
+    public int locknum;
+    public LockController lockController;
 
     private SpriteRenderer itemSprite;
 
@@ -26,7 +28,7 @@ public class ItemController : MonoBehaviour
     {
         if (InRange())
         {
-            messageUIController.DisplayMessage("Closet Lock Password: " + gameManager.password);
+            messageUIController.DisplayMessage(lockController.name+" Password: " + gameManager.passwords[locknum]);
         }
     }
 

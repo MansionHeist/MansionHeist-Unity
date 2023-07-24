@@ -66,12 +66,4 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isMove",isMove);
     }
 
-    
-    private void OnTriggerEnter2D(Collider2D other){
-        if(other.gameObject.tag=="PWDocument"){
-             //open popup that shows password
-        }
-    }
-
-
 }

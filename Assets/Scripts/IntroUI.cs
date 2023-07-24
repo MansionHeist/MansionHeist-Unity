@@ -7,6 +7,7 @@ public class IntroUI : MonoBehaviour
 {
     [SerializeField] private Text playerTypeText;
     [SerializeField] private GameObject intro;
+    [SerializeField] private GameObject gameui;
 
     public PlayerController player;
 
@@ -28,9 +29,11 @@ public class IntroUI : MonoBehaviour
 
     public IEnumerator ShowIntroSequence(){
         intro.SetActive(true);
+        gameui.SetActive(false);
         ShowPlayerType();
         yield return new WaitForSeconds(3f);
         intro.SetActive(false);
+        gameui.SetActive(true);
     }
 
 
