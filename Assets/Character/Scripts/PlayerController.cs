@@ -35,9 +35,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(isCurrentPlayer){
-            Move();
-        }
+        Move();
     }
     
 
@@ -65,7 +63,7 @@ public class PlayerController : MonoBehaviour
         // Keep the camera fixed in the background (no rotation or movement)
         cameraTransform.position = new Vector3(transform.position.x, transform.position.y, -10f);
         bool isMove = moveDirection.magnitude!=0f;
-        //animator.SetBool("isMove",isMove);
+        animator.SetBool("isMove",isMove);
     }
 
     
