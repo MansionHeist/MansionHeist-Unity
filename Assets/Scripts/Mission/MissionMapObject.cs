@@ -8,9 +8,6 @@ public class MissionMapObject : MonoBehaviour
     private bool isClickable = false;
 
     [SerializeField]
-    private Color clickableColor;
-
-    [SerializeField]
     private GameObject missionUI;
 
     // Start is called before the first frame update
@@ -24,7 +21,7 @@ public class MissionMapObject : MonoBehaviour
         var player = collision.GetComponent<PlayerController>();
         if (player != null)
         {
-            spriteRenderer.color = clickableColor;
+            spriteRenderer.color = Color.green;
             isClickable = true;
         }
     }

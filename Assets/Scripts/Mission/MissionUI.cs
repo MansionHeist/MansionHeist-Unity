@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class MissionUI : MonoBehaviour
 {
-    void Start()
-    {
-    }
-
-    public void Open()
+    public virtual void Open()
     {
         PlayerController.isMoveable = false;
         gameObject.transform.parent.gameObject.SetActive(true);
         gameObject.SetActive(true);
     }
 
-    public void Close()
+    public virtual void Close()
     {
         PlayerController.isMoveable = true;
-        gameObject.SetActive(false); //Çý¹Î¾ÆÃß°¡ÇØ!
+        gameObject.SetActive(false); //ï¿½ï¿½ï¿½Î¾ï¿½ï¿½ß°ï¿½ï¿½ï¿½!
         gameObject.transform.parent.gameObject.SetActive(false);
         
     }
