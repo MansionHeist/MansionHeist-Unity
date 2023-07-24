@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class MissionUI : MonoBehaviour
 {
-    void Start()
-    {
-    }
-
     public void Open()
     {
         PlayerController.isMoveable = false;
@@ -18,6 +14,7 @@ public class MissionUI : MonoBehaviour
     public void Close()
     {
         PlayerController.isMoveable = true;
+        gameObject.SetActive(false);
         gameObject.transform.parent.gameObject.SetActive(false);
     }
 }
