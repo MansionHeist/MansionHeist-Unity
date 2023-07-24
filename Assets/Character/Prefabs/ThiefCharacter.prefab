@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 8812624559304111603}
   m_Layer: 3
   m_Name: ThiefCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -368,9 +368,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerType: 1
+  nicknameText: {fileID: 5284409604770222688}
   moveSpeed: 5
   rotationSpeed: 5
-  nicknameText: {fileID: 5284409604770222688}
 --- !u!95 &8667554293500133670
 Animator:
   serializedVersion: 5

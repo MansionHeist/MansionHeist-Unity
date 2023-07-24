@@ -19,7 +19,7 @@ public class MinimapUI : MonoBehaviour
     [SerializeField]
     private Image minimapPlayerImage;
 
-    private CharacterMover targetPlayer;
+    private PlayerController targetPlayer;
     // Start is called before the first frame update
     void Start()
     {
