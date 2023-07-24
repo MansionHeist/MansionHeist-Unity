@@ -43,9 +43,7 @@ public class MissionMapObject : MonoBehaviour
     {
         if(isClickable)
         {
-            //missionUI.GetComponent<MissionUI>().Open();
-            missionUI.transform.parent.gameObject.SetActive(true);
-            missionUI.SetActive(true);
+           missionUI.GetComponent<MissionUI>().Open();
         }
     }
 }
