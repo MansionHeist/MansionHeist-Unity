@@ -22,7 +22,7 @@ public class ServerManager : MonoBehaviour{
     void InitSocket(){
         sioCom = GetComponent<SocketIOCommunicator>();
         Debug.Log("Socket Init");
-         sioCom.Instance.On("connect", (string data) => {
+        sioCom.Instance.On("connect", (string data) => {
             Debug.Log("LOCAL: Hey, we are connected!");
             isSocketConnected = true;
         });
@@ -41,10 +41,14 @@ public class ServerManager : MonoBehaviour{
             //playerManager.updatePlayerMovement(data);
         });
 
-        sioCom.Instance.On("finishSetUserNickname", (string data) => {
-            Debug.Log("finishSetUserNickname");
+        sioCom.Instance.On("main-menu/finish-set-user-nickname", (string data) => {
             MainMenuUI mainMenuUI = GameObject.Find("MainMenuUI").GetComponent<MainMenuUI>();
             mainMenuUI.nextScene();
+        });
+
+        sioCom.Instance.On("room-list/set-room-info-list", (string data) => {
+            ListViewManager listViewManager = GameObject.Find("Content").GetComponent<ListViewManager>();
+            listViewManager.setRoomInfo(data);
         });
     }
 
@@ -71,12 +75,8 @@ public class ServerManager : MonoBehaviour{
 
     public void emitMessage(string name, string message){
         if(isSocketConnected){
-            Debug.Log("emitMessage: " + name + ", " + message);
             nameQueue.Enqueue(name);
             messageQueue.Enqueue(message);
-            Debug.Log("finishMessage: " + name + ", " + message);
         }
     }
-    
-    
 }
