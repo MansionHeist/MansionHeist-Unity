@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
 
-    //[SerializeField] private TextMeshProUGUI text; //미션게이지바로 대체
+    [SerializeField] private Image progressbar; //미션게이지바로 대체
     //[SerializeField] private GameObject gameOverPanel; //게임오버 나타내는 창
     private int mission = 0; //수행한 미션 개수
+    private int total = 13;
     public static List<string> passwords = new List<string>();
     [SerializeField]  public List<GameObject> items = new List<GameObject>();
     [HideInInspector] public bool isGameOver = false;
@@ -50,15 +52,24 @@ public class GameManager : MonoBehaviour
             } while (ContainsZero(randomNumber));
             passwords.Add(randomNumber.ToString());
         }
+        SetProgressBar();
+    }
+
+    private void SetProgressBar()
+    {
+        float progressRatio = (float)mission / total;
+        Debug.Log(progressRatio.ToString());
+        progressbar.fillAmount = progressRatio;
     }
 
     private void Update(){
-        
+
     }
 
     public void MissionDone(int number){
-        mission ++;
+        mission++;
         items[number].SetActive(false);
+        SetProgressBar();
     }
     /*
     public void SetGameOver(){
