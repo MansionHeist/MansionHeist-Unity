@@ -19,7 +19,7 @@ public class MinimapUI : MonoBehaviour
     [SerializeField]
     private Image minimapPlayerImage;
 
-    private PlayerController targetPlayer;
+    [SerializeField] private PlayerController targetPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,8 +33,8 @@ public class MinimapUI : MonoBehaviour
         if(targetPlayer!=null){
             Vector2 mapArea = new Vector2(Vector3.Distance(left.position, right.position), Vector3.Distance(bottom.position, top.position));
             Vector2 charPos = new Vector2(
-    Vector3.Distance(left.position, new Vector3(targetPlayer.transform.position.x, 0f, 0f)),
-    Vector3.Distance(bottom.position, new Vector3(0f, targetPlayer.transform.position.y, 0f))
+            Vector3.Distance(left.position, new Vector3(targetPlayer.transform.position.x, 0f, 0f)),
+            Vector3.Distance(bottom.position, new Vector3(0f, targetPlayer.transform.position.y, 0f))
 );
 
             Vector2 normalPos = new Vector2(charPos.x/mapArea.x, charPos.y/mapArea.y);
