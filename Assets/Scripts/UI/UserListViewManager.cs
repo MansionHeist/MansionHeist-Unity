@@ -9,18 +9,17 @@ public class UserListViewManager : MonoBehaviour
     public GameObject listItem; // ??????? ??????
     public RectTransform contentTransform; // ??????? ????????? ??????? ??? Content Transform
 
-    private int rows = 100;
+    private int rows = 5;
     private int columns = 2;
 
-    private List<string> nicknameList, roomNameList;
-    private List<int> userNoList; // ?????????? ???? ????????? ?????? ?????
+    // ?????????? ???? ????????? ?????? ?????
 
     // Start is called before the first frame update
     void Start()
     {        
-        // ??¢®?? ???????? ????????? ??????? ????
+        // ??ï¿½ï¿½?? ???????? ????????? ??????? ????
         // ?????????? ????????? ????? nicknames ??????? ???????? ????
-        getRoomInfo();
+        getUserList();
         /*nicknames = new List<string>
         {
             "Player1", "Player2", "Player3", "Player4", "Player5",
@@ -29,66 +28,67 @@ public class UserListViewManager : MonoBehaviour
         CreateListView();*/
     }
 
-    private void getRoomInfo(){
+    private class UserInfo{
+        public List<string> userNameList;
+        public List<bool> userReadyList;
+        public string masterUserName;
+    }
+
+    public void setUserList(string json){
+        UserInfo userInfo = JsonUtility.FromJson<UserInfo>(json);
+        CreateListView(userInfo);
+    }
+
+    public void getUserList(){
         ServerManager serverManager = GameObject.Find("ServerManager").GetComponent<ServerManager>();
-        serverManager.emitMessage("room-list/get-room-info-list", "");
+        serverManager.emitMessage("user-list/get-user-list", "");
     }
 
-    private class RoomInfo{
-        public List<string> roomNameList;
-        public List<string> roomUserNameList;
-        public List<int> roomUserNoList;
-        public List<string> roomSocketIDList;
-    }
-
-    public void setRoomInfo(string data){
-        //Debug.Log("setUserName");
-        Debug.Log(data);
-        RoomInfo roomInfo = JsonUtility.FromJson<RoomInfo>(data);
-        CreateListView(roomInfo);
-    }
-
-    private void CreateListView(RoomInfo roomInfo)
+    private void CreateListView(UserInfo userInfo)
     {
+        Debug.Log("CreateListView");
+        foreach(Transform child in transform){
+            Destroy(child.gameObject);
+        }
         for (int row = 0; row < rows; row++)
         {
             for (int col = 0; col < columns; col++)
             {
                 int index = row * columns + col;
-                if (index >= roomInfo.roomNameList.Count)
-                    return; // ??????? ?????? ?????????? ???
+                if (index >= userInfo.userNameList.Count){
+                    row = rows+1;
+                    break; // ??????? ?????? ?????????? ??
+                }
 
                 // ??????? ??? ?????? ????
                 GameObject item = Instantiate(listItem, contentTransform);
 
-                // ????? ????? ??? ????
-                RectTransform itemRect = item.GetComponent<RectTransform>();
-                float itemWidth = contentTransform.rect.width / columns;
-                float itemHeight = contentTransform.rect.height / rows;
-                itemRect.sizeDelta = new Vector2(itemWidth, itemHeight);
-                itemRect.anchoredPosition = new Vector2(col * itemWidth, -row * itemHeight);
-
-                // ???? ????? ??????? UI ?????? ??? ?????.
-                // ???? ???, Text ????????? ??????? ?????? ????????, ??????? ??????? ???? ????? ?????? ?? ??????.
-                TextMeshProUGUI roomNameText = item.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                TextMeshProUGUI nicknameText = item.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-                TextMeshProUGUI userNoText = item.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-                TextMeshProUGUI socketIDText = item.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-                //TextMeshPro textComponent = item.GetComponentInChildren<TextMeshPro>();
-                if (roomNameText != null){
-                    //Debug.Log("roomNameText");
-                    roomNameText.text = roomInfo.roomNameList[index];//"Room " + index.ToString();
-                }
-                if(nicknameText!=null){
-                    nicknameText.text = roomInfo.roomUserNameList[index];//"User " + index.ToString();
-                }
-                if(userNoText != null){
-                    userNoText.text = roomInfo.roomUserNoList[index].ToString() + "/10";//"User No " + index.ToString();
-                }
-                if(socketIDText != null){
-                    socketIDText.text = roomInfo.roomSocketIDList[index];
+                TextMeshProUGUI userNameText = item.GetComponent<TextMeshProUGUI>();
+                if(userNameText!=null){
+                    if(userInfo.masterUserName == userInfo.userNameList[index]){
+                        userNameText.text = userInfo.userNameList[index];
+                        userNameText.color = Color.red;
+                    }
+                    else if(userInfo.userReadyList[index]){
+                        userNameText.text = userInfo.userNameList[index] + " (Ready)";
+                        userNameText.color = Color.green;
+                    }else{
+                        userNameText.text = userInfo.userNameList[index];
+                    }
+                    
+                    
                 }
             }
+        }
+        Debug.Log(userInfo.masterUserName);
+        GameObject readyButton = GameObject.Find("PopupBackground").transform.GetChild(1).gameObject;
+        GameObject startButton = GameObject.Find("PopupBackground").transform.GetChild(2).gameObject;
+        if(userInfo.masterUserName == PlayerSettings.userName){
+            startButton.SetActive(true);
+            readyButton.SetActive(false);
+        }else{
+            startButton.SetActive(false);
+            readyButton.SetActive(true);
         }
     }
 }
