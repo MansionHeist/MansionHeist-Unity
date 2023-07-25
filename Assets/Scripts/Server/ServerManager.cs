@@ -47,8 +47,8 @@ public class ServerManager : MonoBehaviour{
         });
 
         sioCom.Instance.On("room-list/set-room-info-list", (string data) => {
-            ListViewManager listViewManager = GameObject.Find("Content").GetComponent<ListViewManager>();
-            listViewManager.setRoomInfo(data);
+            RoomListViewManager roomListViewManager = GameObject.Find("Content").GetComponent<RoomListViewManager>();
+            roomListViewManager.setRoomInfo(data);
         });
     }
 
