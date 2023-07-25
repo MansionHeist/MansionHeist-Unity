@@ -2447,7 +2447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b058f504ceff1b44fa4aedf173d7353d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  password: 
+  items: []
   isGameOver: 0
   introUI: {fileID: 1452327264}
 --- !u!4 &303231029
@@ -3595,7 +3595,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 511637979}
-  m_Enabled:   1
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -10277,8 +10277,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d325ae9fd1d78649939e97d569c43b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timerDuration: 3
   playerTypeText: {fileID: 1542091558}
   intro: {fileID: 1452327260}
+  gameui: {fileID: 0}
+  timerText: {fileID: 0}
   player: {fileID: 671301694449695671}
 --- !u!1 &1456633515
 GameObject:
@@ -11013,7 +11016,6 @@ RectTransform:
   - {fileID: 1456633516}
   - {fileID: 1288211889}
   - {fileID: 1182245432}
-  - {fileID: 1854247941}
   - {fileID: 141063856}
   - {fileID: 622326513}
   m_Father: {fileID: 1304029902}
@@ -11895,43 +11897,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846373727}
   m_CullTransparentMesh: 1
---- !u!1 &1854247940
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1570872131}
-  - component: {fileID: 1570872133}
-  - component: {fileID: 1570872132}
-  m_Layer: 5
-  m_Name: Mission List UI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1854247941
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1854247940}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1570872131}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1873318778
 GameObject:
   m_ObjectHideFlags: 0
