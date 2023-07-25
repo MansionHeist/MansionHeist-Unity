@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ClosetLock : MonoBehaviour
 {
-    public static ClosetLock Instance;
     public string location;
     public Text messageText;
     public InputField passwordInput;
@@ -13,26 +12,13 @@ public class ClosetLock : MonoBehaviour
     public AlarmUI alarm;
     public int locknum;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
     public void Start()
     {
         passwordInput.text = "";
         messageText.color = Color.white;
         // Set a callback for the submit button
         submitButton.onClick.RemoveAllListeners();
-        submitButton.onClick.AddListener(() => CheckPassword(GameManager.passwords[locknum]));
+        submitButton.onClick.AddListener(() => CheckPassword(GameManager.instance.passwords[locknum]));
     }
 
     private void CheckPassword(string correctPassword)

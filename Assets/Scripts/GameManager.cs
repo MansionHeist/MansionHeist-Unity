@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     //[SerializeField] private TextMeshProUGUI text; //미션게이지바로 대체
     //[SerializeField] private GameObject gameOverPanel; //게임오버 나타내는 창
     private int mission = 0; //수행한 미션 개수
-    public static List<string> passwords = new List<string>();
+    public List<string> passwords = new List<string>();
     [SerializeField]  public List<GameObject> items = new List<GameObject>();
     [HideInInspector] public bool isGameOver = false;
 
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private static bool ContainsZero(int number)
+    private bool ContainsZero(int number)
     {
         while (number > 0)
         {
