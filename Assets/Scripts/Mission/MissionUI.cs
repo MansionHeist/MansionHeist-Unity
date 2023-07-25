@@ -18,6 +18,8 @@ public class MissionUI : MonoBehaviour
     public void Close()
     {
         PlayerController.isMoveable = true;
+        gameObject.SetActive(false); //Çý¹Î¾ÆÃß°¡ÇØ!
         gameObject.transform.parent.gameObject.SetActive(false);
+        
     }
 }
