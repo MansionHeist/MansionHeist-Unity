@@ -7,6 +7,8 @@ public class MissionMapObject : MonoBehaviour
     protected SpriteRenderer spriteRenderer;
     private bool isClickable = false;
 
+    private Color clickableColor = Color.green;
+
     [SerializeField]
     private GameObject missionUI;
 
@@ -21,7 +23,7 @@ public class MissionMapObject : MonoBehaviour
         var player = collision.GetComponent<PlayerController>();
         if (player != null)
         {
-            spriteRenderer.color = Color.green;
+            spriteRenderer.color = clickableColor;
             isClickable = true;
         }
     }

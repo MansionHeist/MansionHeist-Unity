@@ -31,7 +31,6 @@ public class BookShelf : MonoBehaviour
                 Debug.Log("Success");
                 GameManager gameManager = GameManager.instance;
                 gameManager.MissionDone(9);
-                ResetSequence();
                 MissionUI missionUI = GetComponent<MissionUI>();
                 missionUI.Close();
 
