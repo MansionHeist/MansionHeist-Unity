@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     //private ServerManager serverManager = null;
     private List<string> userNameList = new List<string>();
     private List<GameObject> playerList = new List<GameObject>();
+    private int theifNo = 0, caughtNo = 0;
 
 
     void Start(){
@@ -44,8 +45,13 @@ public class PlayerManager : MonoBehaviour
 
     public void initPlayerList(List<string> userNameList, List<string> userTypeList){
         Debug.Log("initPlayerList : " + userNameList.Count);
+        theifNo = 0;
+        caughtNo = 0;
         for(int i=0; i<userNameList.Count; i++){
             Debug.Log(userNameList[i] + " : " + userTypeList[i]);
+            if(userTypeList[i]=="theif"){
+                theifNo++;
+            }
             if(userNameList[i]!=PlayerSettings.userName){
                 addUser(userNameList[i], userTypeList[i]);
             }
@@ -74,5 +80,34 @@ public class PlayerManager : MonoBehaviour
         playerList[userIdx].transform.position = position;
         playerList[userIdx].transform.rotation = Quaternion.Euler(rotation);
         playerList[userIdx].GetComponent<Animator>().SetBool("isMove", playerData.isMove);
+    }
+
+    public void arrestTheif(string userName){
+        if(userName==PlayerSettings.userName){
+            PlayerController playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerController.Caught();
+        }else{
+            for(int i=0; i<playerList.Count; i++){
+                if(playerList[i]!=null && playerList[i].GetComponent<OtherPlayerController>().getUserName()==userName){
+                    playerList[i].GetComponent<OtherPlayerController>().Caught();
+                }
+            }
+        }
+        caughtNo = GameObject.FindGameObjectsWithTag("CaughtPlayer").Length;
+        if(theifNo==caughtNo){
+            GameManager.instance.SetGameOver((PlayerSettings.userType == EPlayerType.Guard));
+        }
+    }
+    public void unlock(string userName){
+        if(userName==PlayerSettings.userName){
+            PlayerController playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerController.GetOutOfJail();
+        }else{
+            for(int i=0; i<playerList.Count; i++){
+                if(playerList[i]!=null && playerList[i].GetComponent<OtherPlayerController>().getUserName()==userName){
+                    playerList[i].GetComponent<OtherPlayerController>().GetOutOfJail();
+                }
+            }
+        }
     }
 }

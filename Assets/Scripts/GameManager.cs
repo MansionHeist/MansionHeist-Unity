@@ -95,19 +95,48 @@ public class GameManager : MonoBehaviour
         }
         
         SetProgressBar();
+        if(mission == total){
+            SetGameOver((PlayerSettings.userType == EPlayerType.Thief));
+        }
     }
-    /*
-    public void SetGameOver(){
+
+    private bool isWin = false;
+    
+    public void SetGameOver(bool _isWin){
+        isWin = _isWin;
         isGameOver = true;
+        ServerManager serverManager = GameObject.Find("ServerManager").GetComponent<ServerManager>();
+        serverManager.emitMessage("game/game-over", "");
         Invoke("ShowGameOverPanel",1f); //일정시간 후 수행
     }
 
     void ShowGameOverPanel(){
-        gameOverPanel.SetActive(true);
+        //gameOverPanel.SetActive(true);
+        //PlayerManager playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+        Destroy(GameObject.Find("PlayerManager"));
+        Destroy(GameObject.Find("ServerManager"));
+        foreach(GameObject playerObj in GameObject.FindGameObjectsWithTag("CaughtPlayer")){
+            Destroy(playerObj);
+        }
+        foreach(GameObject playerObj in GameObject.FindGameObjectsWithTag("TheifPlayer")){
+            Destroy(playerObj);
+        }
+        foreach(GameObject playerObj in GameObject.FindGameObjectsWithTag("GuardPlayer")){
+            Destroy(playerObj);
+        }
+        GameObject gameOverUI = GameObject.Find("UICanvas").transform.GetChild(3).gameObject;
+        gameOverUI.SetActive(true);
+        GameObject winUI = gameOverUI.transform.GetChild(1).gameObject;
+        GameObject loseUI = gameOverUI.transform.GetChild(2).gameObject;
+        if(isWin){
+            winUI.SetActive(true);
+        }else{
+            loseUI.SetActive(true);
+        }
+        Invoke("Exit", 7f);
     }
 
     public void Exit(){
         SceneManager.LoadScene("MainScene");
     }
-*/
 }

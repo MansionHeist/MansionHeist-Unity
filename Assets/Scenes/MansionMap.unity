@@ -3543,7 +3543,7 @@ GameObject:
   m_Component:
   - component: {fileID: 402981392}
   m_Layer: 5
-  m_Name: Thief UI
+  m_Name: TheifUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13160,7 +13160,7 @@ GameObject:
   - component: {fileID: 1304029900}
   - component: {fileID: 1304029899}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18325,10 +18325,10 @@ MonoBehaviour:
       - m_Target: {fileID: 1518191290842117562}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: ArrestNearbyThief
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Collider2D, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -18802,7 +18802,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1862226231}
   m_Layer: 5
-  m_Name: Guard UI
+  m_Name: GuardUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19842,7 +19842,7 @@ GameObject:
   - component: {fileID: 1956574019}
   - component: {fileID: 1956574020}
   m_Layer: 5
-  m_Name: GameOver UI
+  m_Name: GameOverUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - PWDocument
+  - TheifPlayer
+  - CaughtPlayer
+  - GuardPlayer
   layers:
   - Default
   - TransparentFX

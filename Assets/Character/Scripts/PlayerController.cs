@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed = 5f;
     private float rotationSpeed = 5f;
     private ServerManager serverManager;
+    GameObject closestTheif = null;
 
     [SerializeField] private Text nicknameText; //머리위에 뜨는 text
     [SerializeField] private RuntimeAnimatorController thiefAnimationController; 
@@ -51,8 +52,55 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (isMoveable)
+        if (isMoveable){
             Move();
+            if(PlayerSettings.userType == EPlayerType.Guard){
+                checkArrestButton();
+            }else{
+                checkUnlockTheif();
+            }
+        }
+        cameraTransform.position = new Vector3(transform.position.x, transform.position.y, -10f);
+        nicknameText.transform.rotation = Quaternion.identity;
+        nicknameText.transform.position = new Vector3(transform.position.x, transform.position.y + 0.7f, 0f);
+
+    }
+
+    private void checkArrestButton(){
+        GameObject arrestButton = GameObject.Find("GuardUI").transform.GetChild(0).gameObject;
+        closestTheif = null;
+        float closestDistance = 3.0f;
+        foreach(GameObject theifObj in GameObject.FindGameObjectsWithTag("TheifPlayer")){
+            Vector3 distance = theifObj.transform.position - transform.position;
+            float curDistance = distance.sqrMagnitude;
+            if(curDistance < closestDistance){
+                closestDistance = curDistance;
+                closestTheif = theifObj;
+            }
+        }
+        if(closestTheif!=null){
+            arrestButton.SetActive(true);
+        }else{
+            arrestButton.SetActive(false);
+        }
+    }
+    
+    private void checkUnlockTheif(){
+        closestTheif = null;
+        float closestDistance = 1.0f;
+        foreach(GameObject theifObj in GameObject.FindGameObjectsWithTag("CaughtPlayer")){
+            Vector3 distance = theifObj.transform.position - transform.position;
+            float curDistance = distance.sqrMagnitude;
+            if(curDistance < closestDistance){
+                closestDistance = curDistance;
+                closestTheif = theifObj;
+            }
+        }
+        if(closestTheif!=null){
+            OtherPlayerController otherPlayerController = closestTheif.GetComponent<OtherPlayerController>();
+            string theifName = otherPlayerController.getUserName();
+            serverManager.emitMessage("game/unlock-theif", theifName);
+        }
     }
 
     private class PlayerData{
@@ -101,14 +149,11 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        nicknameText.transform.rotation = Quaternion.identity;
-        nicknameText.transform.position = new Vector3(transform.position.x, transform.position.y + 0.7f, 0f);
-
+        
         // Move the character in the direction of the input
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
         // Keep the camera fixed in the background (no rotation or movement)
-        cameraTransform.position = new Vector3(transform.position.x, transform.position.y, -10f);
         bool isMove = moveDirection.magnitude!=0f;
         
         sendUserMoveInfo(isMove);
@@ -121,11 +166,18 @@ public class PlayerController : MonoBehaviour
         sAnimator.SetBool("isMove", false);
     }
     
-    public void ArrestNearbyThief(Collider2D thiefCollider)
+    public void ArrestNearbyThief()
     {
         // TODO: thief에 대한 처리
         // 근처라는 기준을 어떻게 잡을 것인지?
         // collider로 처리할 건지, 아니면 distance를 기준으로 계산할건지
+        Debug.Log("ArrestNearbyThief: " + closestTheif.name);
+        OtherPlayerController otherPlayerController = closestTheif.GetComponent<OtherPlayerController>();
+        string theifName = otherPlayerController.getUserName();
+        
+        serverManager.emitMessage("game/arrest-theif", theifName);
+        //otherPlayerController.Caught();
+
     }
 
     public void Caught()
@@ -134,6 +186,9 @@ public class PlayerController : MonoBehaviour
         jail.SetActive(true);
         jail.transform.rotation = Quaternion.identity;
         PlayerController.StopMoving();
+        gameObject.tag = "CaughtPlayer";
+        GameObject missionUi = GameObject.Find("Map").transform.GetChild(1).gameObject;
+        missionUi.SetActive(false);
     }
 
     public void GetOutOfJail()
@@ -143,5 +198,8 @@ public class PlayerController : MonoBehaviour
         jail.SetActive(false);
         jail.transform.rotation = Quaternion.identity; 
         PlayerController.isMoveable = true;
+        gameObject.tag = "TheifPlayer";
+        GameObject missionUi = GameObject.Find("Map").transform.GetChild(1).gameObject;
+        missionUi.SetActive(true);
     }
 }
