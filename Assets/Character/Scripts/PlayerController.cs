@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Transform cameraTransform; 
     private float moveSpeed = 5f;
     private float rotationSpeed = 5f;
+    private ServerManager serverManager;
 
     [SerializeField] private Text nicknameText; //머리위에 뜨는 text
     [SerializeField] private RuntimeAnimatorController thiefAnimationController; 
@@ -36,6 +39,9 @@ public class PlayerController : MonoBehaviour
     {
         cameraTransform = Camera.main.transform;
         cameraTransform.localPosition = new Vector3(0f, 0f, -10f);
+        serverManager = GameObject.Find("ServerManager").GetComponent<ServerManager>();
+        PlayerManager playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+        playerManager.startGame();
     }
 
     private void OnEnable()
@@ -48,6 +54,37 @@ public class PlayerController : MonoBehaviour
         if (isMoveable)
             Move();
     }
+
+    private class PlayerData{
+        public float[] position;
+        public float[] rotation;
+        public string userName;
+        public bool isMove;
+        public int userRoomIdx;
+    }
+
+    public void sendUserMoveInfo(bool isMove){
+        PlayerData playerData = new PlayerData();
+        Vector3 position = transform.position;
+        playerData.position = new float[3]{
+            position.x,
+            position.y,
+            position.z
+        };
+        Vector3 rotation = transform.rotation.eulerAngles;
+        playerData.rotation = new float[3]{
+            rotation.x,
+            rotation.y,
+            rotation.z
+        };
+        playerData.userName = PlayerSettings.userName;
+        playerData.isMove = isMove;
+        playerData.userRoomIdx = serverManager.getUserRoomIdx();
+        string json = JsonUtility.ToJson(playerData);
+        Debug.Log("USER MOVE: " + json);
+        serverManager.emitMessage2("game/user-movement", json);
+    }
+
     
     public void Move(){
         // Read keyboard input
@@ -73,6 +110,8 @@ public class PlayerController : MonoBehaviour
         // Keep the camera fixed in the background (no rotation or movement)
         cameraTransform.position = new Vector3(transform.position.x, transform.position.y, -10f);
         bool isMove = moveDirection.magnitude!=0f;
+        
+        sendUserMoveInfo(isMove);
         animator.SetBool("isMove", isMove);
     }
 

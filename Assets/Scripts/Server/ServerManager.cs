@@ -10,11 +10,19 @@ using UnityEngine.SceneManagement;
 
 public class ServerManager : MonoBehaviour{
     private string userSocketId = "";
-    private string userName = "";
     //public SocketIOUnity socket = null;
     public SocketIOCommunicator sioCom;
     public bool isSocketConnected = false;
-    //PlayerManager playerManager = null;
+    PlayerManager playerManager = null;
+    private int userRoomIdx = -1;
+
+    public void setUserRoomIdx(int _userRoomIdx){
+        userRoomIdx = _userRoomIdx;
+    }
+    
+    public int getUserRoomIdx(){
+        return userRoomIdx;
+    }
     
     public String getCurrentSocketId(){
         return userSocketId;
@@ -49,7 +57,9 @@ public class ServerManager : MonoBehaviour{
 
         sioCom.Instance.On("room-list/set-room-info-list", (string data) => {
             RoomListViewManager roomListViewManager = GameObject.Find("Content").GetComponent<RoomListViewManager>();
-            roomListViewManager.setRoomInfo(data);
+            if(roomListViewManager!=null){
+                roomListViewManager.setRoomInfo(data);
+            }
         });
 
         sioCom.Instance.On("room-list/enter-room", (string data) => {
@@ -57,16 +67,39 @@ public class ServerManager : MonoBehaviour{
                 SceneManager.LoadScene("RoomScene");
             }else{
                 RoomListViewManager roomListViewManager = GameObject.Find("Content").GetComponent<RoomListViewManager>();
-                roomListViewManager.getRoomInfo();
+                if(roomListViewManager!=null){
+                    roomListViewManager.getRoomInfo();
+                }
             }
         });
         sioCom.Instance.On("user-list/set-user-list", (string data) => {
             Debug.Log("set-user-list: " + data);
             UserListViewManager userListViewManager = GameObject.Find("JoiningPeopleList").GetComponent<UserListViewManager>();
-            userListViewManager.setUserList(data);
+            if(userListViewManager!=null){
+                userListViewManager.setUserList(data);
+            }
         });
         sioCom.Instance.On("user-list/start-game", (string data) => {
-            SceneManager.LoadScene("MansionMap");
+            SceneManager.LoadScene("LoadingScene");
+        });
+        sioCom.Instance.On("loading/set-user-info", (string data) => {
+            LoadingSceneController loadingSceneController = GameObject.Find("Canvas").GetComponent<LoadingSceneController>();
+            if(loadingSceneController!=null){
+                loadingSceneController.setUserInfo(data);
+            }
+        });
+        sioCom.Instance.On("loading/start-game", (string data) => {
+            LoadingSceneController loadingSceneController = GameObject.Find("Canvas").GetComponent<LoadingSceneController>();
+            if(loadingSceneController!=null){
+                loadingSceneController.loadScene("MansionMap");
+            }
+        });
+        sioCom.Instance.On("game/user-movement", (string data) => {
+            Debug.Log("! game/user-movement: " + data);
+            if(playerManager == null){
+                playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+            }
+            playerManager.updatePlayerMovement(data);
         });
     }
 
@@ -93,8 +126,19 @@ public class ServerManager : MonoBehaviour{
 
     public void emitMessage(string name, string message){
         if(isSocketConnected){
-            nameQueue.Enqueue(name);
-            messageQueue.Enqueue(message);
+            sioCom.Instance.Emit(name, message, true);
+            //Debug.Log("emitMessage: " + name + ", " + message);
+            //nameQueue.Enqueue(name);
+            //messageQueue.Enqueue(message);
+        }
+    }
+
+    public void emitMessage2(string name, string message){
+        if(isSocketConnected){
+            sioCom.Instance.Emit(name, message, false);
+            //Debug.Log("emitMessage: " + name + ", " + message);
+            //nameQueue.Enqueue(name);
+            //messageQueue.Enqueue(message);
         }
     }
 }
