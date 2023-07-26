@@ -18257,7 +18257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1774455275
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18321,7 +18321,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1774455277}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1518191290842117562}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: ArrestNearbyThief
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Collider2D, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1774455277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18790,7 +18802,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1862226231}
   m_Layer: 5
-  m_Name: Police UI
+  m_Name: Guard UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21441,6 +21453,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4045699398738765463, guid: fc35218074463c147ae35ad80385465b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4658425591538088719, guid: fc35218074463c147ae35ad80385465b, type: 3}
       propertyPath: m_Name
       value: Player
@@ -21490,6 +21506,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc35218074463c147ae35ad80385465b, type: 3}
+--- !u!114 &1518191290842117562 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6399070794044891393, guid: fc35218074463c147ae35ad80385465b, type: 3}
+  m_PrefabInstance: {fileID: 1518191290842117561}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edbcbac894fbff1458a0922cae140a9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

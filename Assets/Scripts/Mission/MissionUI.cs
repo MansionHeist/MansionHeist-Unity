@@ -10,7 +10,7 @@ public class MissionUI : MonoBehaviour
 
     public void Open()
     {
-        PlayerController.isMoveable = false;
+        PlayerController.StopMoving();
         gameObject.transform.parent.gameObject.SetActive(true);
         gameObject.SetActive(true);
     }
