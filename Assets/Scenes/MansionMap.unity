@@ -2704,6 +2704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b058f504ceff1b44fa4aedf173d7353d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passwords: []
   progressbar: {fileID: 826775282}
   items:
   - {fileID: 1288029677}
