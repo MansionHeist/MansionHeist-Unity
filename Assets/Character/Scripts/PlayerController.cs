@@ -141,6 +141,7 @@ public class PlayerController : MonoBehaviour
         // TODO: ArrestNearbyTheif()처럼, 체포/탈출에 사용되는 기존 player보다 좀더 넓은 collider를 설정하고, 충돌시 체포/타출땡이 가능하도록 하는 방법을 생각중..
         GameObject jail = transform.Find("Canvas").gameObject.transform.Find("Jail").gameObject;
         jail.SetActive(false);
-        jail.transform.rotation = Quaternion.identity; PlayerController.isMoveable = true;
+        jail.transform.rotation = Quaternion.identity; 
+        PlayerController.isMoveable = true;
     }
 }

@@ -101,6 +101,11 @@ public class ServerManager : MonoBehaviour{
             }
             playerManager.updatePlayerMovement(data);
         });
+        sioCom.Instance.On("game/mission-done", (string data) => {
+            Debug.Log("! game/mission-done: " + data);
+            GameManager gameManager = GameManager.instance;
+            gameManager.MissionDone(int.Parse(data));
+        });
     }
 
     void initSocketId(String socketId){

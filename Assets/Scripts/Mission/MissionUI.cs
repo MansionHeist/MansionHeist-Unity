@@ -25,8 +25,10 @@ public class MissionUI : MonoBehaviour
 
     public void SuccessClose(int num)
     {
-        GameManager gameManager = GameManager.instance;
-        gameManager.MissionDone(num);
+        /*GameManager gameManager = GameManager.instance;
+        gameManager.MissionDone(num);*/
+        ServerManager serverManager = GameObject.Find("ServerManager").GetComponent<ServerManager>();
+        serverManager.emitMessage("game/mission-done", num.ToString());
         Close();
         missionCompleteUI.Show();
         
