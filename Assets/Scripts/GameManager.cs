@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     //[SerializeField] private GameObject gameOverPanel; //게임오버 나타내는 창
     private int mission = 0; //수행한 미션 개수
     private int total = 13;
-    public List<string> passwords = new List<string>();
+    public static List<string> passwords = new List<string>();
     [SerializeField]  public List<GameObject> items = new List<GameObject>();
     [HideInInspector] public bool isGameOver = false;
 
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private bool ContainsZero(int number)
+    private static bool ContainsZero(int number)
     {
         while (number > 0)
         {
@@ -58,8 +58,11 @@ public class GameManager : MonoBehaviour
     private void SetProgressBar()
     {
         float progressRatio = (float)mission / total;
-        Debug.Log(progressRatio.ToString());
         progressbar.fillAmount = progressRatio;
+    }
+
+    private void Update(){
+
     }
 
     public void MissionDone(int number){

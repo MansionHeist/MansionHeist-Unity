@@ -30,12 +30,14 @@ public class IntroUI : MonoBehaviour
 
 
     public IEnumerator ShowIntroSequence(){
+        PlayerController.isMoveable = false;
         gameui.SetActive(false);
         intro.SetActive(true);
         ShowPlayerType();
         yield return new WaitForSeconds(3f);
         intro.SetActive(false);
         gameui.SetActive(true);
+        PlayerController.isMoveable = true;
     }
 
     public IEnumerator TimerCoroutine()

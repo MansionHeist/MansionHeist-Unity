@@ -5,35 +5,38 @@ using UnityEngine.UI;
 
 public class NineButtons : MonoBehaviour
 {
-    public Button[] buttons;
-
-    private int buttonsClicked = 0;
+    private int buttonsPressed = 0;
+    private int totalButtons = 9;
+    [SerializeField] public List<Button> buttons; // List of buttons to track
 
     private void Start()
     {
-        for (int i = 0; i < buttons.Length; i++)
+        // Add onClick listeners to all buttons in the list
+        foreach (Button button in buttons)
         {
-            int buttonIndex = i;
-            buttons[i].onClick.AddListener(() => OnButtonClicked(buttonIndex));
+            button.onClick.AddListener(() => OnButtonClicked(button));
         }
     }
 
-    private void OnButtonClicked(int buttonIndex)
+    private void OnButtonClicked(Button button)
     {
-        buttonsClicked++;
+        // Increase the count of pressed buttons
+        buttonsPressed++;
 
-        buttons[buttonIndex].gameObject.SetActive(false);
+        // Disable the button to make it unclickable
+        button.interactable = false;
 
-        if (buttonsClicked == buttons.Length)
+        // Check if all buttons are pressed
+        if (buttonsPressed == totalButtons)
         {
-            AllButtonsAreClicked();
+            AllButtonsArePressed();
         }
     }
 
-    private void AllButtonsAreClicked()
+    private void AllButtonsArePressed()
     {
         GameManager gameManager = GameManager.instance;
-        gameManager.MissionDone(11);
+        gameManager.MissionDone(8);
         MissionUI missionUI = GetComponent<MissionUI>();
         missionUI.Close();
     }
