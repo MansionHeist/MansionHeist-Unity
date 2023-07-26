@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public static bool isMoveable = true;
+    private static Animator sAnimator;
     private Animator animator;
     private Transform cameraTransform; 
     private float moveSpeed = 5f;
@@ -21,14 +23,24 @@ public class PlayerController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         animator.runtimeAnimatorController = PlayerSettings.userType == EPlayerType.Thief ? thiefAnimationController : guardAnimationController;
+
+        if(sAnimator == null)
+        {
+            sAnimator = animator;
+        }
+
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = PlayerSettings.userType == EPlayerType.Thief ? thiefSprite : guardSprite;
     }
     void Start()
     {
-        nicknameText.text = PlayerSettings.userName;
         cameraTransform = Camera.main.transform;
         cameraTransform.localPosition = new Vector3(0f, 0f, -10f);
+    }
+
+    private void OnEnable()
+    {
+        nicknameText.text = PlayerSettings.userName;
     }
 
     private void Update()
@@ -64,9 +76,32 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isMove", isMove);
     }
 
-    private void OnTriggerEnter2D(Collider2D other){
-        if(other.gameObject.tag=="PWDocument"){
-             //open popup that shows password
-        }
+    public static void StopMoving()
+    {
+        PlayerController.isMoveable = false;
+        sAnimator.SetBool("isMove", false);
+    }
+    
+    public void ArrestNearbyThief(Collider2D thiefCollider)
+    {
+        // TODO: thief에 대한 처리
+        // 근처라는 기준을 어떻게 잡을 것인지?
+        // collider로 처리할 건지, 아니면 distance를 기준으로 계산할건지
+    }
+
+    public void Caught()
+    {
+        GameObject jail = transform.Find("Canvas").gameObject.transform.Find("Jail").gameObject;
+        jail.SetActive(true);
+        jail.transform.rotation = Quaternion.identity;
+        PlayerController.StopMoving();
+    }
+
+    public void GetOutOfJail()
+    {
+        // TODO: ArrestNearbyTheif()처럼, 체포/탈출에 사용되는 기존 player보다 좀더 넓은 collider를 설정하고, 충돌시 체포/타출땡이 가능하도록 하는 방법을 생각중..
+        GameObject jail = transform.Find("Canvas").gameObject.transform.Find("Jail").gameObject;
+        jail.SetActive(false);
+        jail.transform.rotation = Quaternion.identity; PlayerController.isMoveable = true;
     }
 }
