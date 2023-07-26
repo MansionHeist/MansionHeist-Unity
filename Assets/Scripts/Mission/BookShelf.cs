@@ -27,22 +27,17 @@ public class BookShelf : MonoBehaviour
 
             if (currentIndex == correctSequence.Count)
             {
-                // Success! The correct sequence was pressed.
-                Debug.Log("Success");
-                GameManager gameManager = GameManager.instance;
-                gameManager.MissionDone(9);
+                
                 MissionUI missionUI = GetComponent<MissionUI>();
-                missionUI.Close();
+                missionUI.SuccessClose(9);
 
             }
         }
         else
         {
-            // Incorrect button press, reset the sequence and set the alarm
-            alarmUI.StartFlickering("Library");
             ResetSequence();
             MissionUI missionUI = GetComponent<MissionUI>();
-            missionUI.Close();
+            missionUI.FailClose("Library");
         }
         
         

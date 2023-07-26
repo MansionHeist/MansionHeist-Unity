@@ -35,9 +35,7 @@ public class FiveSwitch : MonoBehaviour
 
     private void AllButtonsArePressed()
     {
-        GameManager gameManager = GameManager.instance;
-        gameManager.MissionDone(8);
         MissionUI missionUI = GetComponent<MissionUI>();
-        missionUI.Close();
+        missionUI.SuccessClose(8);
     }
 }

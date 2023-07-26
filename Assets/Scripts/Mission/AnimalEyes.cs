@@ -35,9 +35,7 @@ public class AnimalEyes : MonoBehaviour
 
     private void AllButtonsArePressed()
     {
-        GameManager gameManager = GameManager.instance;
-        gameManager.MissionDone(12);
         MissionUI missionUI = GetComponent<MissionUI>();
-        missionUI.Close();
+        missionUI.SuccessClose(12);
     }
 }
