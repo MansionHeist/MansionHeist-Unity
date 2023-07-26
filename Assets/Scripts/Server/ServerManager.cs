@@ -107,23 +107,20 @@ public class ServerManager : MonoBehaviour{
             gameManager.MissionDone(int.Parse(data));
         });
         sioCom.Instance.On("game/arrest-theif", (string data) => {
-            /*if(data==PlayerSettings.userName){
-                PlayerController playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-                playerController.Caught();
-            }else{*/
-                PlayerManager playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-                playerManager.arrestTheif(data);
-            //}
+            PlayerManager playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+            playerManager.arrestTheif(data);
         });
         sioCom.Instance.On("game/unlock-theif", (string data) => {
-            /*if(data==PlayerSettings.userName){
-                PlayerController playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-                playerController.GetOutOfJail();
-            }else{*/
-                PlayerManager playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-                playerManager.unlock(data);
-            //}
+            PlayerManager playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+            playerManager.unlock(data);
         });
+        sioCom.Instance.On("game/alarm", (string data) => {
+            Debug.Log("! game/alarm: " + data);
+            GameManager gameManager = GameManager.instance;
+            gameManager.alarm(data);
+        });
+
+
     }
 
     void initSocketId(String socketId){
