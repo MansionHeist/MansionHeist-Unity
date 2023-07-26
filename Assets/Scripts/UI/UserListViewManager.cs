@@ -32,10 +32,13 @@ public class UserListViewManager : MonoBehaviour
         public List<string> userNameList;
         public List<bool> userReadyList;
         public string masterUserName;
+        public string roomName;
     }
 
     public void setUserList(string json){
         UserInfo userInfo = JsonUtility.FromJson<UserInfo>(json);
+        TextMeshProUGUI roomNameText = GameObject.Find("RoomUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        roomNameText.text = userInfo.roomName;
         CreateListView(userInfo);
     }
 
@@ -75,8 +78,6 @@ public class UserListViewManager : MonoBehaviour
                     }else{
                         userNameText.text = userInfo.userNameList[index];
                     }
-                    
-                    
                 }
             }
         }
