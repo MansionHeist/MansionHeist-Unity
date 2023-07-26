@@ -15,7 +15,6 @@ public class MainMenuUI : MonoBehaviour
         PlayerSettings.userName = value;
         serverManager = GameObject.Find("ServerManager").GetComponent<ServerManager>();
         serverManager.emitMessage("main-menu/set-user-nickname", value);
-        //SceneManager.LoadScene("RoomListScene");
     }
 
     public void OnClickGameStartButton()

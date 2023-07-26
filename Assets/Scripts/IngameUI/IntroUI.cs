@@ -17,7 +17,7 @@ public class IntroUI : MonoBehaviour
     {
         if (player != null)
         {
-            if (player.playerType == EPlayerType.Guard){
+            if (PlayerSettings.userType == EPlayerType.Guard){
                 playerTypeText.text = "You Are Guard";
             } else{
                 playerTypeText.text = "You Are Thief";
@@ -27,7 +27,6 @@ public class IntroUI : MonoBehaviour
         Debug.LogError("Player reference is missing in IntroUI!");
         }
     }
-
 
     public IEnumerator ShowIntroSequence(){
         PlayerController.isMoveable = false;
@@ -52,6 +51,4 @@ public class IntroUI : MonoBehaviour
             remainingTime -= 1f;
         }
     }
-
-
 }
