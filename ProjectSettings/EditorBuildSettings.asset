@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadingScene.unity
     guid: 39b1a2bc433fb3c4f91964a50773af61
   - enabled: 1
+    path: Assets/Scenes/MansionMap.unity
+    guid: e17ca9d9f2c2b6e418ca5d0c3cf18495
+  - enabled: 0
     path: Assets/Scenes/MansionMap 2.unity
     guid: f0fc10471624cde4184aec6a84d6c894
   m_configObjects: {}

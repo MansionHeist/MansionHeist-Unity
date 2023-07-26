@@ -12,20 +12,51 @@ public class LoadingSceneController : MonoBehaviour
     [SerializeField]
     Image progressBar;
 
-    public static void LoadScene(string sceneName)
+    public void loadScene(string sceneName)
     {
         nextScene = sceneName;
-        SceneManager.LoadScene("LoadingScene");
+        StartCoroutine(LoadSceneProcess());
+        //SceneManager.LoadScene("LoadingScene");
+    }
+
+    private class UserInfo{
+        public string userType;
+        public List<string> userNameList;
+        public List<string> userTypeList;
+        public int userRoomIdx;
+    }
+
+    public void setUserInfo(string data){
+        Debug.Log("setUserInfo: " + data);
+        UserInfo userInfo = JsonUtility.FromJson<UserInfo>(data);
+        Debug.Log("userType: " + userInfo.userType);
+        if(userInfo.userType=="theif"){
+            PlayerSettings.userType = EPlayerType.Thief;
+        }else{
+            PlayerSettings.userType = EPlayerType.Guard;
+        }
+        ServerManager serverManager = GameObject.Find("ServerManager").GetComponent<ServerManager>();
+        serverManager.setUserRoomIdx(userInfo.userRoomIdx);
+        PlayerManager playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+        playerManager.initPlayerList(userInfo.userNameList, userInfo.userTypeList);
+
+        // FINISH SETTING
+        serverManager.emitMessage("loading/user-loaded", "");
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(LoadSceneProcess());
+        ServerManager serverManager = GameObject.Find("ServerManager").GetComponent<ServerManager>();
+        serverManager.emitMessage("loading/get-user-info", "");
+        nextScene = "";
     }
 
     IEnumerator LoadSceneProcess()
     {
+        while(nextScene==""){
+            
+        }
         AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
         op.allowSceneActivation = false;
 
