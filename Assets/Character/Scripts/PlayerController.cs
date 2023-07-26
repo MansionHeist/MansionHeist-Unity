@@ -7,16 +7,26 @@ public class PlayerController : MonoBehaviour
 {
     public static bool isMoveable = true;
     private Animator animator;
-    private Transform cameraTransform;
-    
-    [SerializeField] private Text nicknameText; //머리위에 뜨는 text
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float rotationSpeed = 5f;
+    private Transform cameraTransform; 
+    private float moveSpeed = 5f;
+    private float rotationSpeed = 5f;
 
+    [SerializeField] private Text nicknameText; //머리위에 뜨는 text
+    [SerializeField] private RuntimeAnimatorController thiefAnimationController; 
+    [SerializeField] private RuntimeAnimatorController guardAnimationController;
+    [SerializeField] private Sprite thiefSprite;
+    [SerializeField] private Sprite guardSprite;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        animator.runtimeAnimatorController = PlayerSettings.userType == EPlayerType.Thief ? thiefAnimationController : guardAnimationController;
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = PlayerSettings.userType == EPlayerType.Thief ? thiefSprite : guardSprite;
+    }
     void Start()
     {
         nicknameText.text = PlayerSettings.userName;
-        animator = GetComponent<Animator>();
         cameraTransform = Camera.main.transform;
         cameraTransform.localPosition = new Vector3(0f, 0f, -10f);
     }
@@ -27,7 +37,6 @@ public class PlayerController : MonoBehaviour
             Move();
     }
     
-
     public void Move(){
         // Read keyboard input
         float horizontalInput = Input.GetAxis("Horizontal");

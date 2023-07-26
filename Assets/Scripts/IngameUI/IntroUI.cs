@@ -11,20 +11,12 @@ public class IntroUI : MonoBehaviour
     [SerializeField] private GameObject gameui;
     [SerializeField] private Text timerText;
 
-    public PlayerController player;
-
     public void ShowPlayerType()
     {
-        if (player != null)
-        {
-            if (PlayerSettings.userType == EPlayerType.Guard){
-                playerTypeText.text = "You Are Guard";
-            } else{
-                playerTypeText.text = "You Are Thief";
-            }
-        }
-        else{
-        Debug.LogError("Player reference is missing in IntroUI!");
+        if (PlayerSettings.userType == EPlayerType.Guard){
+            playerTypeText.text = "You Are Guard";
+        } else{
+            playerTypeText.text = "You Are Thief";
         }
     }
 

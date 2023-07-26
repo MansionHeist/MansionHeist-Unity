@@ -19,9 +19,26 @@ public class GameManager : MonoBehaviour
 
     public IntroUI introUI;
 
+    [SerializeField] GameObject missionMapObjects;
+    [SerializeField] GameObject ThiefUI;
+    [SerializeField] GameObject GuardUI;
+
     void Awake(){ // start 전에 시행
         if(instance==null){
             instance = this;
+        }
+
+        if (PlayerSettings.userType == EPlayerType.Thief)
+        {
+            GuardUI.SetActive(false);
+            missionMapObjects.SetActive(true);
+            ThiefUI.SetActive(true);
+        }
+        else if (PlayerSettings.userType == EPlayerType.Guard)
+        {
+            ThiefUI.SetActive(false);
+            missionMapObjects.SetActive(false);
+            GuardUI.SetActive(true);
         }
     }
 
