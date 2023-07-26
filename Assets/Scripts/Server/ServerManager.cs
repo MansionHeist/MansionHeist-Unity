@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System;
 using Firesplash.GameDevAssets.SocketIO;
+using UnityEngine.SceneManagement;
 
 public class ServerManager : MonoBehaviour{
     private string userSocketId = "";
@@ -22,7 +23,7 @@ public class ServerManager : MonoBehaviour{
     void InitSocket(){
         sioCom = GetComponent<SocketIOCommunicator>();
         Debug.Log("Socket Init");
-         sioCom.Instance.On("connect", (string data) => {
+        sioCom.Instance.On("connect", (string data) => {
             Debug.Log("LOCAL: Hey, we are connected!");
             isSocketConnected = true;
         });
@@ -41,10 +42,31 @@ public class ServerManager : MonoBehaviour{
             //playerManager.updatePlayerMovement(data);
         });
 
-        sioCom.Instance.On("finishSetUserNickname", (string data) => {
-            Debug.Log("finishSetUserNickname");
+        sioCom.Instance.On("main-menu/finish-set-user-nickname", (string data) => {
             MainMenuUI mainMenuUI = GameObject.Find("MainMenuUI").GetComponent<MainMenuUI>();
             mainMenuUI.nextScene();
+        });
+
+        sioCom.Instance.On("room-list/set-room-info-list", (string data) => {
+            RoomListViewManager roomListViewManager = GameObject.Find("Content").GetComponent<RoomListViewManager>();
+            roomListViewManager.setRoomInfo(data);
+        });
+
+        sioCom.Instance.On("room-list/enter-room", (string data) => {
+            if(data=="success"){
+                SceneManager.LoadScene("RoomScene");
+            }else{
+                RoomListViewManager roomListViewManager = GameObject.Find("Content").GetComponent<RoomListViewManager>();
+                roomListViewManager.getRoomInfo();
+            }
+        });
+        sioCom.Instance.On("user-list/set-user-list", (string data) => {
+            Debug.Log("set-user-list: " + data);
+            UserListViewManager userListViewManager = GameObject.Find("JoiningPeopleList").GetComponent<UserListViewManager>();
+            userListViewManager.setUserList(data);
+        });
+        sioCom.Instance.On("user-list/start-game", (string data) => {
+            SceneManager.LoadScene("MansionMap");
         });
     }
 
@@ -71,12 +93,8 @@ public class ServerManager : MonoBehaviour{
 
     public void emitMessage(string name, string message){
         if(isSocketConnected){
-            Debug.Log("emitMessage: " + name + ", " + message);
             nameQueue.Enqueue(name);
             messageQueue.Enqueue(message);
-            Debug.Log("finishMessage: " + name + ", " + message);
         }
     }
-    
-    
 }

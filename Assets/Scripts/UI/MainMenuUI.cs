@@ -10,11 +10,11 @@ public class MainMenuUI : MonoBehaviour
     private TMP_InputField nameInputField;
     ServerManager serverManager;
 
-    public void setNickname(string value)
+    public void getNickname(string value)
     {
         PlayerSettings.userName = value;
         serverManager = GameObject.Find("ServerManager").GetComponent<ServerManager>();
-        serverManager.emitMessage("setUserNickname", value);
+        serverManager.emitMessage("main-menu/set-user-nickname", value);
         //SceneManager.LoadScene("RoomListScene");
     }
 
@@ -22,7 +22,7 @@ public class MainMenuUI : MonoBehaviour
     {
         if(nameInputField.text.Trim()!= "")
         {
-            setNickname(nameInputField.text.Trim());
+            getNickname(nameInputField.text.Trim());
         } else
         {
             nameInputField.GetComponent<Animator>().SetTrigger("on");

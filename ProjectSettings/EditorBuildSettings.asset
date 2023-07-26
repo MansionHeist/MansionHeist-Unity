@@ -7,6 +7,9 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
+    guid: 47e9d5b95288d9245bc29584ea9789e4
+  - enabled: 1
+    path: Assets/Firesplash Entertainment/Socket.IO/Examples/Main Example/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/RoomListScene.unity
