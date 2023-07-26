@@ -39,12 +39,10 @@ public class DoNotMove : MonoBehaviour
             // Stop the timer coroutine if it's running
             if (timerCoroutine != null)
                 StopCoroutine(timerCoroutine);
-
-            // Show the alarm UI
-            alarm.StartFlickering(location);
+          
             timerText.text = "";
             MissionUI missionUI = GetComponent<MissionUI>();
-            missionUI.Close();
+            missionUI.FailClose(location);
         }
     }
 
@@ -76,9 +74,8 @@ public class DoNotMove : MonoBehaviour
 
     private void CloseUI()
     {
-        GameManager gameManager = GameManager.instance;
-        gameManager.MissionDone(10);
+       
         MissionUI missionUI = GetComponent<MissionUI>();
-        missionUI.Close();
+        missionUI.SuccessClose(10);
     }
 }

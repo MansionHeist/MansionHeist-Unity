@@ -28,7 +28,7 @@ public class LongPress : MonoBehaviour
             // TODO: 특정 기능 수행
             // print("누른 시간: " + clickedTime.ToString());
             clickedTime = 0;
-            missionUI.Close();
+            missionUI.SuccessClose(4);
         }
         else
         {

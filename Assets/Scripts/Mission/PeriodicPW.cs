@@ -12,10 +12,11 @@ public class PeriodicPW : MissionUI
     [SerializeField]
     private TMP_InputField pwInputField;
 
-    private string pw = "2349";
+    private string pw;
 
-    private void Awake()
+    private void Start()
     {
+        pw = GameManager.passwords[2];
         _textMeshPro.text = implementPW(pw);
     }
 
@@ -57,14 +58,15 @@ public class PeriodicPW : MissionUI
 
     public void OnClickSubmitButton()
     {
+        MissionUI missionUI = GetComponent<MissionUI>();
         // TODO: 비밀번호가 일치하는지 GameManager과 검사함
         if (pwInputField.text.Equals(pw))
         {
-            Close();
+            missionUI.SuccessClose(7);
         }
         else
         {
-            pwInputField.GetComponent<Animator>().SetTrigger("on");
+            missionUI.FailClose("Doctor's Lab");
         }
     }
 }
