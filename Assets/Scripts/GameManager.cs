@@ -136,6 +136,16 @@ public class GameManager : MonoBehaviour
         Invoke("Exit", 7f);
     }
 
+    public void alarm(string location){
+        if(PlayerSettings.userType == EPlayerType.Guard){
+            GameObject alarmObject = GameObject.Find("GuardUI").transform.GetChild(1).gameObject;
+            AlarmUI alarmUI = alarmObject.GetComponent<AlarmUI>();
+            alarmUI.StartFlickering(location);
+            //alarmUI.SetActive(true);
+            //alarmUI.GetComponent<AlarmUI>().StartFlickering(location);
+        }
+    }
+
     public void Exit(){
         SceneManager.LoadScene("MainScene");
     }

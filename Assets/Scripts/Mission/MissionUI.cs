@@ -20,7 +20,6 @@ public class MissionUI : MonoBehaviour
         PlayerController.isMoveable = true;
         gameObject.SetActive(false);
         gameObject.transform.parent.gameObject.SetActive(false);
-
     }
 
     public void SuccessClose(int num)
@@ -31,13 +30,14 @@ public class MissionUI : MonoBehaviour
         serverManager.emitMessage("game/mission-done", num.ToString());
         Close();
         missionCompleteUI.Show();
-        
     }
 
     public void FailClose(string location)
     {
         Close();
         alarm.StartFlickering(location);
+        ServerManager serverManager = GameObject.Find("ServerManager").GetComponent<ServerManager>();
+        serverManager.emitMessage("game/alarm", location);
     }
 
 }
