@@ -12493,7 +12493,7 @@ MonoBehaviour:
   bottom: {fileID: 986245804}
   minimapImage: {fileID: 92147522}
   minimapPlayerImage: {fileID: 1898178947}
-  targetPlayer: {fileID: 0}
+  targetPlayer: {fileID: 1518191290842117562}
 --- !u!114 &1183975546
 MonoBehaviour:
   m_ObjectHideFlags: 0
