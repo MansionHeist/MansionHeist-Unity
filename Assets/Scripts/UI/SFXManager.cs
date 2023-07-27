@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class SFXManager : MonoBehaviour
 {
-    [SerializeField] private AudioClip audio;
+    [SerializeField] private AudioClip audioSFX;
 
     void WarningAlert()
     {
-        AudioSource.PlayClipAtPoint(audio, Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(audioSFX, Camera.main.transform.position);
     }
 }
