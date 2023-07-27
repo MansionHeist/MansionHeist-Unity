@@ -35,10 +35,9 @@ public class MissionUI : MonoBehaviour
     public void FailClose(string location)
     {
         Close();
-        alarm = GameObject.Find("TheifUI").transform.GetChild(1).gameObject.GetComponent<AlarmUI>();
+        alarm = GameObject.Find("ThiefUI").transform.GetChild(1).gameObject.GetComponent<AlarmUI>();
         alarm.StartFlickering(location);
         ServerManager serverManager = GameObject.Find("ServerManager").GetComponent<ServerManager>();
         serverManager.emitMessage("game/alarm", location);
     }
-
 }
