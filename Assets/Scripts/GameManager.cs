@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +24,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject ThiefUI;
     [SerializeField] GameObject GuardUI;
 
+    [SerializeField] AudioClip backgroundMusicClip;
+
+    private AudioSource backgroundMusicSource;
+
     void Awake(){ // start 전에 시행
         if(instance==null){
             instance = this;
@@ -39,6 +44,13 @@ public class GameManager : MonoBehaviour
             ThiefUI.SetActive(false);
             missionMapObjects.SetActive(false);
             GuardUI.SetActive(true);
+        }
+
+        GameObject bgmObject = GameObject.Find("BackgroundMusic");
+        if (bgmObject != null)
+        {
+            backgroundMusicSource = bgmObject.GetComponent<AudioSource>();
+            backgroundMusicSource.Stop();
         }
     }
 
@@ -60,12 +72,19 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(introUI.ShowIntroSequence());
         StartCoroutine(introUI.TimerCoroutine());
-       
+
+        if(backgroundMusicSource != null)
+        {
+            backgroundMusicSource.volume = 0.9f;
+            backgroundMusicSource.clip = backgroundMusicClip;
+            backgroundMusicSource.Play();
+        }
+
         int randomNumber = 0;
         for (int i = 0; i < 3; i++){
             do
             {
-                randomNumber = Random.Range(1000, 10000);
+                randomNumber = UnityEngine.Random.Range(1000, 10000);
             } while (ContainsZero(randomNumber));
             passwords.Add(randomNumber.ToString());
         }

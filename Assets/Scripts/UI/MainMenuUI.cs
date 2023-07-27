@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUI : MonoBehaviour
 {
-    [SerializeField]
-    private TMP_InputField nameInputField;
+    [SerializeField] private TMP_InputField nameInputField;
     ServerManager serverManager;
 
     public void getNickname(string value)

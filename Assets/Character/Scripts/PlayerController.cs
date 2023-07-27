@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,13 +10,15 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed = 5f;
     private float rotationSpeed = 5f;
     private ServerManager serverManager;
-    GameObject closestTheif = null;
+    GameObject closestThief = null;
 
     [SerializeField] private Text nicknameText; //머리위에 뜨는 text
     [SerializeField] private RuntimeAnimatorController thiefAnimationController; 
     [SerializeField] private RuntimeAnimatorController guardAnimationController;
     [SerializeField] private Sprite thiefSprite;
     [SerializeField] private Sprite guardSprite;
+    [SerializeField] private AudioClip footStepVFX1;
+    [SerializeField] private AudioClip footStepVFX2;
 
     private void Awake()
     {
@@ -68,17 +65,17 @@ public class PlayerController : MonoBehaviour
 
     private void checkArrestButton(){
         GameObject arrestButton = GameObject.Find("GuardUI").transform.GetChild(0).gameObject;
-        closestTheif = null;
+        closestThief = null;
         float closestDistance = 3.0f;
         foreach(GameObject theifObj in GameObject.FindGameObjectsWithTag("TheifPlayer")){
             Vector3 distance = theifObj.transform.position - transform.position;
             float curDistance = distance.sqrMagnitude;
             if(curDistance < closestDistance){
                 closestDistance = curDistance;
-                closestTheif = theifObj;
+                closestThief = theifObj;
             }
         }
-        if(closestTheif!=null){
+        if(closestThief!=null){
             arrestButton.SetActive(true);
         }else{
             arrestButton.SetActive(false);
@@ -86,18 +83,18 @@ public class PlayerController : MonoBehaviour
     }
     
     private void checkUnlockTheif(){
-        closestTheif = null;
+        closestThief = null;
         float closestDistance = 1.0f;
         foreach(GameObject theifObj in GameObject.FindGameObjectsWithTag("CaughtPlayer")){
             Vector3 distance = theifObj.transform.position - transform.position;
             float curDistance = distance.sqrMagnitude;
             if(curDistance < closestDistance){
                 closestDistance = curDistance;
-                closestTheif = theifObj;
+                closestThief = theifObj;
             }
         }
-        if(closestTheif!=null){
-            OtherPlayerController otherPlayerController = closestTheif.GetComponent<OtherPlayerController>();
+        if(closestThief!=null){
+            OtherPlayerController otherPlayerController = closestThief.GetComponent<OtherPlayerController>();
             string theifName = otherPlayerController.getUserName();
             serverManager.emitMessage("game/unlock-theif", theifName);
         }
@@ -149,13 +146,12 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        
         // Move the character in the direction of the input
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
         // Keep the camera fixed in the background (no rotation or movement)
         bool isMove = moveDirection.magnitude!=0f;
-        
+
         sendUserMoveInfo(isMove);
         animator.SetBool("isMove", isMove);
     }
@@ -171,8 +167,8 @@ public class PlayerController : MonoBehaviour
         // TODO: thief에 대한 처리
         // 근처라는 기준을 어떻게 잡을 것인지?
         // collider로 처리할 건지, 아니면 distance를 기준으로 계산할건지
-        Debug.Log("ArrestNearbyThief: " + closestTheif.name);
-        OtherPlayerController otherPlayerController = closestTheif.GetComponent<OtherPlayerController>();
+        Debug.Log("ArrestNearbyThief: " + closestThief.name);
+        OtherPlayerController otherPlayerController = closestThief.GetComponent<OtherPlayerController>();
         string theifName = otherPlayerController.getUserName();
         
         serverManager.emitMessage("game/arrest-theif", theifName);
@@ -201,5 +197,14 @@ public class PlayerController : MonoBehaviour
         gameObject.tag = "TheifPlayer";
         GameObject missionUi = GameObject.Find("Map").transform.GetChild(1).gameObject;
         missionUi.SetActive(true);
+    }
+
+    void FootStep1()
+    {
+        AudioSource.PlayClipAtPoint(footStepVFX1, Camera.main.transform.position);
+    }
+    void FootStep2()
+    {
+        AudioSource.PlayClipAtPoint(footStepVFX2, Camera.main.transform.position);
     }
 }
