@@ -17430,7 +17430,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1663953343}
-  - component: {fileID: 1663953345}
   - component: {fileID: 1663953347}
   - component: {fileID: 1663953346}
   - component: {fileID: 1663953344}
@@ -17476,22 +17475,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c116b4c8574e6154f88ba1f300fdfd78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  correctSequence: 040000000100000002000000030000000500000006000000
-  alarmUI: {fileID: 1598579505}
---- !u!114 &1663953345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1663953342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9703876884911864bbd9fe8143446385, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   missionCompleteUI: {fileID: 882578502}
-  alarm: {fileID: 1598579505}
+  alarm: {fileID: 581420689}
+  correctSequence: 040000000100000002000000030000000500000006000000
 --- !u!114 &1663953346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17872,7 +17858,7 @@ PrefabInstance:
     - target: {fileID: 1196561260466681091, guid: 15e8648726a66d8429f7cd7d39cff762, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1663953345}
+      objectReference: {fileID: 1663953344}
     - target: {fileID: 1196561260466681091, guid: 15e8648726a66d8429f7cd7d39cff762, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Close
@@ -19498,8 +19484,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.745283, g: 0.7267218, b: 0.6995817, a: 1}
+    m_PressedColor: {r: 0.6320754, g: 0.5041789, b: 0.33690813, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 1, g: 0, b: 0, a: 0.5019608}
     m_ColorMultiplier: 1

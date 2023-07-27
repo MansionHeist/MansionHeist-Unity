@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BookShelf : MonoBehaviour
+public class BookShelf : MissionUI
 {
     public List<int> correctSequence = new List<int> { 4, 1, 2, 3, 5, 6 };
     private List<int> buttonPresses = new List<int>();
     private int currentIndex = 0;
-
-    public AlarmUI alarmUI;
 
     public void OnButtonClick(int buttonNumber)
     {
@@ -27,17 +25,13 @@ public class BookShelf : MonoBehaviour
 
             if (currentIndex == correctSequence.Count)
             {
-                
-                MissionUI missionUI = GetComponent<MissionUI>();
-                missionUI.SuccessClose(9);
-
+                SuccessClose(9);
             }
         }
         else
         {
             ResetSequence();
-            MissionUI missionUI = GetComponent<MissionUI>();
-            missionUI.FailClose("Library");
+            FailClose("Library");
         }
         
         
