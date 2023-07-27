@@ -11,6 +11,11 @@ public class IntroUI : MonoBehaviour
     [SerializeField] private GameObject gameui;
     [SerializeField] private Text timerText;
 
+    private void Awake()
+    {
+        timerDuration = PlayerSettings.userType == EPlayerType.Thief ? timerDuration : 8f;
+    }
+
     public void ShowPlayerType()
     {
         if (PlayerSettings.userType == EPlayerType.Guard){
@@ -25,7 +30,7 @@ public class IntroUI : MonoBehaviour
         gameui.SetActive(false);
         intro.SetActive(true);
         ShowPlayerType();
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(timerDuration);
         intro.SetActive(false);
         gameui.SetActive(true);
         PlayerController.isMoveable = true;
