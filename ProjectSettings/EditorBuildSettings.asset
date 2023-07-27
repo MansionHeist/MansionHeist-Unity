@@ -23,4 +23,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MansionMap.unity
     guid: e17ca9d9f2c2b6e418ca5d0c3cf18495
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: c57dfc7c695c0d942ac3df22a571c7b2, type: 2}
