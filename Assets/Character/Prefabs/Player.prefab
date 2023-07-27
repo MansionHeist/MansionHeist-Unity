@@ -218,6 +218,8 @@ MonoBehaviour:
   guardAnimationController: {fileID: 9100000, guid: 0d6f097c379c0604ab347b0b19721da5, type: 2}
   thiefSprite: {fileID: -1316875220, guid: e04fdd18d02c8af4aa306701b3370b42, type: 3}
   guardSprite: {fileID: 1159571109, guid: f1b32bd72eb72df4ca0d493d9e95dc53, type: 3}
+  footStepVFX1: {fileID: 8300000, guid: 75d4e54cf94712d4e8de7ce385abceb2, type: 3}
+  footStepVFX2: {fileID: 8300000, guid: 2c37f11b2d56b374ebf354853c6ad643, type: 3}
 --- !u!212 &8493359144892094856
 SpriteRenderer:
   m_ObjectHideFlags: 0

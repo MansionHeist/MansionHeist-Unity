@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private RuntimeAnimatorController guardAnimationController;
     [SerializeField] private Sprite thiefSprite;
     [SerializeField] private Sprite guardSprite;
+    [SerializeField] private AudioClip footStepVFX1;
+    [SerializeField] private AudioClip footStepVFX2;
 
     private void Awake()
     {
@@ -149,13 +151,12 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        
         // Move the character in the direction of the input
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
         // Keep the camera fixed in the background (no rotation or movement)
         bool isMove = moveDirection.magnitude!=0f;
-        
+
         sendUserMoveInfo(isMove);
         animator.SetBool("isMove", isMove);
     }
@@ -201,5 +202,14 @@ public class PlayerController : MonoBehaviour
         gameObject.tag = "TheifPlayer";
         GameObject missionUi = GameObject.Find("Map").transform.GetChild(1).gameObject;
         missionUi.SetActive(true);
+    }
+
+    void FootStep1()
+    {
+        AudioSource.PlayClipAtPoint(footStepVFX1, gameObject.transform.position);
+    }
+    void FootStep2()
+    {
+        AudioSource.PlayClipAtPoint(footStepVFX2, gameObject.transform.position);
     }
 }
